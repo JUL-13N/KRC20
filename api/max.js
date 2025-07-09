@@ -1,41 +1,21 @@
-import axios from 'axios';
 
 export default async function handler(req, res) {
-  // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-
-  if (req.method !== 'GET') {
-    res.setHeader('Allow', ['GET']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
-    return;
-  }
-
+  // Basic test first
   try {
-    const { data } = await axios.get('https://api.kasplex.org/v1/krc20/token/NACHO', {
-      timeout: 10000, // 10 second timeout
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; Vercel-Function)'
-      }
-    });
+    // Test without axios first
+    const response = await fetch('https://api.kasplex.org/v1/krc20/token/NACHO');
     
-    const maxRaw = data?.result?.[0]?.max;
-    
-    if (maxRaw === undefined) {
-      res.status(404).send('Max supply not found');
-      return;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
     
+    const data = await response.json();
+    const maxRaw = data?.result?.[0]?.max;
+    
     res.setHeader('Content-Type', 'text/plain');
-    res.status(200).send(String(maxRaw));
+    res.status(200).send(maxRaw ? String(maxRaw) : 'No max found');
   } catch (err) {
-    console.error('API Error:', err.message);
-    res.status(500).send('Error fetching max supply');
+    console.error('Error:', err);
+    res.status(500).send(`Error: ${err.message}`);
   }
 }
