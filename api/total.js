@@ -19,9 +19,9 @@ export default async function handler(req, res) {
     // Get the token from query parameter, default to NACHO if not provided
     const token = req.query.token || 'NACHO';
     
-    // Check if this is the /api/max endpoint (returns total supply value only)
-    // vs /api endpoint (returns all token info)
-    const isMaxEndpoint = req.url.includes('/max');
+    // Check if this is the total supply endpoint, then return total supply value only
+    // vs /api endpoint which returns all token info
+    const isMaxEndpoint = req.url.includes('/total');
     
     // Fetch data from the original API using the specified token
     const response = await fetch(`https://api.kasplex.org/v1/krc20/token/${token}`);
@@ -39,9 +39,9 @@ export default async function handler(req, res) {
     
     const tokenData = data.result[0];
     
-    // If this is the /api/max endpoint, return just the total supply value
+    // If this is the total supply endpoint, return just the total supply value
     if (isMaxEndpoint) {
-      const totalSupply = tokenData.max; // Still indexing "max" from API response
+      const totalSupply = tokenData.max; // Indexing "max" from API response
       if (!totalSupply) {
         return res.status(404).json({ error: `Total supply not found for token: ${token}` });
       }
