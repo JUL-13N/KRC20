@@ -1,9 +1,6 @@
 // File: api/index.js
 // Usage: Shows landing page when accessing /api/ without query parameters
 
-// File: api/index.js
-// Usage: Shows landing page when accessing /api/ without query parameters
-
 export default async function handler(req, res) {
   // Add CORS headers to make API publicly accessible
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -78,6 +75,13 @@ export default async function handler(req, res) {
             margin: 20px 0;
             font-family: 'Monaco', 'Menlo', monospace;
         }
+        .formula-alt {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
         a {
             color: #3498db;
             text-decoration: none;
@@ -117,22 +121,42 @@ export default async function handler(req, res) {
         
         <h3>Get Total Token Supply</h3>
         <div class="endpoint">GET /api/total?token={ticker}</div>
-        <p>Returns the total supply value as plain text for the specified token.</p>
+        <p>Returns the total supply value as plain text for the specified token. Based on <code>total.js</code>.</p>
         <div class="example">
             <strong>Example:</strong><br>
             <a href="/api/total?token=nacho">/api/total?token=nacho</a>
         </div>
         
-        <h3>Get Unlocked Token Circulating Supply</h3>
+        <h3>Get Circulating Supply</h3>
         <div class="endpoint">GET /api/circulating?token={ticker}</div>
-        <p>Returns the unlocked circulating supply value as plain text, calculated using the formula below.</p>
+        <p>Returns the circulating supply value as plain text, calculated using the formula below. Based on <code>circulating.js</code>.</p>
         <div class="example">
             <strong>Example:</strong><br>
             <a href="/api/circulating?token=nacho">/api/circulating?token=nacho</a>
         </div>
         
-        <h2>🧮 Unlocked Circulating Supply Formula</h2>
+        <h3>Get Unlocked Circulating Supply</h3>
+        <div class="endpoint">GET /api/unlocked-circulating?token={ticker}</div>
+        <p>Returns the unlocked circulating supply value as plain text, calculated using the unlocked formula below. Based on <code>unlocked-circulating.js</code>.</p>
+        <div class="example">
+            <strong>Example:</strong><br>
+            <a href="/api/unlocked-circulating?token=nacho">/api/unlocked-circulating?token=nacho</a>
+        </div>
+        
+        <h2>🧮 Supply Calculation Formulas</h2>
+        
+        <h3>Circulating Supply Formula (circulating.js)</h3>
         <div class="formula">
+            <strong>Circulating Supply = (Max Supply - Insider Supply - Burnt Supply) / 10^decimals</strong><br><br>
+            Where:<br>
+            • Max Supply = "max" field<br>
+            • Insider Supply = "pre"-minted supply<br>
+            • Burnt Supply = "burned" field<br>
+            • Decimals = "dec" field
+        </div>
+        
+        <h3>Unlocked Circulating Supply Formula (unlocked-circulating.js)</h3>
+        <div class="formula-alt">
             <strong>Unlocked Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply</strong><br><br>
             Where:<br>
             • Max Supply = "max" field<br>
@@ -141,10 +165,14 @@ export default async function handler(req, res) {
             • Locked Supply = "pre"-minted field<br><br>
             All values are divided by 10^("dec") for decimal precision.
         </div>
-        <p>This formula simplifies to: <code>Minted Supply - Burnt Supply - Locked Supply</code></p>
+        <p>The unlocked formula simplifies to: <code>Minted Supply - Burnt Supply - Locked Supply</code></p>
         
         <div class="note">
-            <strong>📌 Note:</strong> If no token parameter is provided, defaults to NACHO token. The circulating supply calculation accounts for pre-minted tokens, burned tokens, and locked tokens to provide an accurate market-available supply figure.
+            <strong>📌 Note:</strong> If no token parameter is provided, defaults to NACHO token. The two circulating supply calculations use different approaches:
+            <ul>
+                <li><strong>Circulating Supply:</strong> Excludes insider/pre-minted tokens from max supply</li>
+                <li><strong>Unlocked Circulating Supply:</strong> Accounts for all minted, burned, and locked tokens</li>
+            </ul>
         </div>
         
         <h2>🔧 Usage</h2>
@@ -157,13 +185,14 @@ export default async function handler(req, res) {
         <ul>
             <li><strong>/api?token=X</strong> - Returns full JSON object of live token data with calculated supply metrics.</li>
             <li><strong>/api/total?token=X</strong> - Returns the total minted supply, normalized by decimal precision.</li>
-            <li><strong>/api/circulating?token=X</strong> - Returns the circulating supply using the formula above, normalized by decimal precision.</li>
+            <li><strong>/api/circulating?token=X</strong> - Returns the circulating supply using the basic formula (excludes insider supply).</li>
+            <li><strong>/api/unlocked-circulating?token=X</strong> - Returns the unlocked circulating supply using the comprehensive formula.</li>
         </ul>
         
         <h3>Enhanced Data Fields</h3>
         <p>The main API endpoint now includes additional calculated fields:</p>
         <ul>
-            <li><code>calculatedCirculatingSupply</code> - Precise circulating supply using the formula</li>
+            <li><code>calculatedCirculatingSupply</code> - Unlocked circulating supply using the comprehensive formula</li>
             <li><code>calculatedTotalSupply</code> - Minted supply normalized by decimals</li>
             <li><code>unmintedSupply</code> - Remaining unminted tokens</li>
             <li><code>supplyMetrics</code> - Object containing all supply calculations</li>
@@ -196,7 +225,7 @@ export default async function handler(req, res) {
     
     const tokenData = data.result[0];
     
-    // Calculate enhanced supply metrics using the precise formula
+    // Calculate enhanced supply metrics using the unlocked circulating supply formula (unlocked-circulating.js)
     const maxSupply = BigInt(tokenData.max || '0');
     const mintedSupply = BigInt(tokenData.minted || '0');
     const burnedSupply = BigInt(tokenData.burned || '0');
@@ -206,7 +235,7 @@ export default async function handler(req, res) {
     // Calculate components
     const unmintedSupply = maxSupply - mintedSupply;
     
-    // Apply the formula: Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply
+    // Apply the unlocked circulating supply formula: Max Supply - Unminted Supply - Burnt Supply - Locked Supply
     // = Max Supply - Max Supply + Minted Supply - Burnt Supply - Locked Supply
     // This simplifies to: Minted Supply - Burnt Supply - Locked Supply
     const circulatingSupplyRaw = mintedSupply - burnedSupply - lockedSupply;
@@ -223,7 +252,7 @@ export default async function handler(req, res) {
     // Add calculated fields to the response
     const enhancedTokenData = {
       ...tokenData,
-      calculatedCirculatingSupply,
+      calculatedCirculatingSupply, // This uses the unlocked-circulating.js formula
       calculatedTotalSupply,
       calculatedMaxSupply,
       calculatedUnmintedSupply,
@@ -232,13 +261,14 @@ export default async function handler(req, res) {
       supplyMetrics: {
         maxSupply: calculatedMaxSupply,
         totalSupply: calculatedTotalSupply,
-        circulatingSupply: calculatedCirculatingSupply,
+        circulatingSupply: calculatedCirculatingSupply, // Unlocked circulating supply
         unmintedSupply: calculatedUnmintedSupply,
         burnedSupply: calculatedBurnedSupply,
         lockedSupply: calculatedLockedSupply,
         decimals: decimals,
-        formula: "Circulating = Max - Unminted - Burned - Locked",
-        simplifiedFormula: "Circulating = Minted - Burned - Locked"
+        formula: "Unlocked Circulating = Max - Unminted - Burned - Locked",
+        simplifiedFormula: "Unlocked Circulating = Minted - Burned - Locked",
+        note: "This calculation uses the unlocked-circulating.js formula"
       }
     };
     
