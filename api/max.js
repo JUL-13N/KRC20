@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
   // Add custom headers to show GitHub repo
-  res.setHeader('X-Source-Code', 'https://github.com/yourusername/your-repo');
+  res.setHeader('X-Source-Code', 'https://github.com/JUL-13N/KRC20');
   res.setHeader('X-API-Version', '1.0.0');
   
   try {
