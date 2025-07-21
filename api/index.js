@@ -145,7 +145,8 @@ export default async function handler(req, res) {
             <strong>Example:</strong><br>
             <a href="/api/unlocked-circulating?token=nacho">/api/unlocked-circulating?token=nacho</a>
         </div>
-        
+        <br>
+
         <h2>🧮 Supply Calculation Formulas</h2>
         
         <h3>Circulating Supply Formula</h3>
@@ -157,7 +158,6 @@ export default async function handler(req, res) {
             • Burnt Supply = "burned" field<br>
             • Decimals = "dec" decimal precision field
         </div>
-        <br>
 
         <h3>Unlocked Circulating Supply Formula</h3>
         <div class="formula-alt">
