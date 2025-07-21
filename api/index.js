@@ -115,7 +115,7 @@ export default async function handler(req, res) {
             <a href="/api?token=nacho">/api?token=nacho</a>
         </div>
         
-        <h3>Get Token Total Supply</h3>
+        <h3>Get Total Token Supply</h3>
         <div class="endpoint">GET /api/total?token={ticker}</div>
         <p>Returns the total supply value as plain text for the specified token.</p>
         <div class="example">
@@ -123,9 +123,9 @@ export default async function handler(req, res) {
             <a href="/api/total?token=nacho">/api/total?token=nacho</a>
         </div>
         
-        <h3>Get Token (Unlocked) Circulating Supply</h3>
+        <h3>Get Unlocked Token Circulating Supply</h3>
         <div class="endpoint">GET /api/circulating?token={ticker}</div>
-        <p>Returns the unlocked circulating supply value as plain text, calculated using the precise formula below.</p>
+        <p>Returns the unlocked circulating supply value as plain text, calculated using the formula below.</p>
         <div class="example">
             <strong>Example:</strong><br>
             <a href="/api/circulating?token=nacho">/api/circulating?token=nacho</a>
