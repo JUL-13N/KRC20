@@ -128,8 +128,8 @@ export default async function handler(req, res) {
         <h3>Response Format</h3>
         <ul>
             <li><strong>/api?token=X</strong> - Returns full JSON object with all token data</li>
-            <li><strong>/api/max?token=X</strong> - Returns plain text with the max supply value (÷ 100,000,000)</li>
-            <li><strong>/api/circulating?token=X</strong> - Returns plain text with circulating supply ((max - pre) ÷ 100,000,000)</li>
+            <li><strong>/api/max?token=X</strong> - Returns plain text with the raw integer divided by 8 decimal places (determined by the token data)</li>
+            <li><strong>/api/circulating?token=X</strong> - Returns plain text with the max supply subtracted by the pre-minted supply divided by 8 decimal places</li>
         </ul>
         
         <div class="footer">
