@@ -125,15 +125,15 @@ export default async function handler(req, res) {
         
         <h3>Get Token Circulating Supply</h3>
         <div class="endpoint">GET /api/circulating?token={ticker}</div>
-        <p>Returns the circulating supply value as plain text, calculated using the precise formula below.</p>
+        <p>Returns the unlocked circulating supply value as plain text, calculated using the precise formula below.</p>
         <div class="example">
             <strong>Example:</strong><br>
             <a href="/api/circulating?token=nacho">/api/circulating?token=nacho</a>
         </div>
         
-        <h2>🧮 Circulating Supply Formula</h2>
+        <h2>🧮 Unlocked Circulating Supply Formula</h2>
         <div class="formula">
-            <strong>Unlocked Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply</strong><br><br>
+            <strong>Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply</strong><br><br>
             Where:<br>
             • Max Supply = "max" field<br>
             • Unminted Supply = "max" - "minted"<br>
