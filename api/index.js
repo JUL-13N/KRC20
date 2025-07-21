@@ -129,7 +129,7 @@ export default async function handler(req, res) {
         <ul>
             <li><strong>/api?token=X</strong> - Returns full JSON object of live token data, deriving total and ciculating supply.</li>
             <li><strong>/api/total?token=X</strong> - Returns the total supply, normalized by the given decimal precision.</li>
-            <li><strong>/api/circulating?token=X</strong> - Returns the total supply subtracted by the preminted and burned supply, normalized by the given decimal precision.</li>
+            <li><strong>/api/circulating?token=X</strong> - Returns the total supply subtracted by the pre-minted and burned supply, normalized by the given decimal precision.</li>
         </ul>
         
         <div class="footer">
