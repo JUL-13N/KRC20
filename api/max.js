@@ -1,5 +1,5 @@
-// File: api/token-max.js
-// Usage: /api/token-max?token=NACHO
+// File: api/max.js
+// Usage: /api/max?token=NACHO
 
 export default async function handler(req, res) {
   try {
