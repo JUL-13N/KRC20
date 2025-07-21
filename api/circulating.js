@@ -1,7 +1,7 @@
 // File: api/circulating.js
 // Usage: /api/circulating?token=<TOKEN> (returns circulating supply for any given token)
 // Default token is NACHO if no token parameter is provided
-// Formula: (max/100,000,000) - pre
+// Formula: (max - pre) / 100,000,000
 export default async function handler(req, res) {
   // Add CORS headers to make API publicly accessible
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -45,8 +45,8 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: `Pre value not found or invalid for token: ${token}` });
     }
     
-    // Calculate circulating supply: (max/100,000,000) - pre
-    const circulatingSupply = (maxValue / 100000000) - preValue;
+    // Calculate circulating supply: (max - pre) / 100,000,000
+    const circulatingSupply = (maxValue - preValue) / 100000000;
     
     // Return the circulating supply as plain text
     res.status(200).send(circulatingSupply.toString());
