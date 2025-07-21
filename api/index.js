@@ -117,7 +117,7 @@ curl https://${req.headers.host}/api/NACHO
 
 # Direct Kasplex API access
 curl https://api.kasplex.org/v1/krc20/token/NACHO
-curl https://api.kasplex.org/v1/krc20/token/KASPY</code></pre>
+curl https://api.kasplex.org/v1/krc20/token/KANGO</code></pre>
       
       <pre><code>// JavaScript examples
 // Get max supply using query parameter (new generic method)
