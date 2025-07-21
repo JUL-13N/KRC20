@@ -1,6 +1,8 @@
 // File: api/max.js
-// Usage: /api?token=NACHO (returns all token info)
-// Usage: /api/max?token=NACHO (returns just max value)
+// Usage: /api/max?token=<TOKEN> (returns just max value for any given token)
+// Usage: /api?token=<TOKEN> (returns all token info for <TOKEN>)
+// Default token is NACHO if no token parameter is provided
+
 export default async function handler(req, res) {
   // Add CORS headers to make API publicly accessible
   res.setHeader('Access-Control-Allow-Origin', '*');
