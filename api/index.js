@@ -92,7 +92,7 @@ export default async function handler(req, res) {
         <h2>📋 Endpoints</h2>
         
         <h3>Get Token Complete Information</h3>
-        <div class="endpoint">GET /api?token=&lt;TOKEN&gt;</div>
+        <div class="endpoint">GET /api?token={ticker}</div>
         <p>Returns real-time and unfiltered token information as JSON for the specified token.</p>
         <div class="example">
             <strong>Example:</strong><br>
@@ -100,7 +100,7 @@ export default async function handler(req, res) {
         </div>
         
         <h3>Get Token Max Supply</h3>
-        <div class="endpoint">GET /api/max?token=&lt;TOKEN&gt;</div>
+        <div class="endpoint">GET /api/max?token={ticker}</div>
         <p>Returns the maximum supply value as plain text for the specified token.</p>
         <div class="example">
             <strong>Example:</strong><br>
@@ -108,7 +108,7 @@ export default async function handler(req, res) {
         </div>
         
         <h3>Get Token Circulating Supply</h3>
-        <div class="endpoint">GET /api/circulating?token=&lt;TOKEN&gt;</div>
+        <div class="endpoint">GET /api/circulating?token={ticker}</div>
         <p>Returns the circulating supply value as plain text, accounting for pre-minted supply (e.g. team wallets).</p>
         <div class="example">
             <strong>Example:</strong><br>
