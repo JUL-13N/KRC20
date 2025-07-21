@@ -54,8 +54,8 @@ export default function handler(req, res) {
         Get specific field for any token<br>
         <small>Examples: 
           <a href="/api/NACHO/max" target="_blank">/api/NACHO/max</a> | 
-          <a href="/api/Kasper/max" target="_blank">/api/Kasper/max</a> | 
-          <a href="/api/Pepe/max" target="_blank">/api/Pepe/max</a>
+          <a href="/api/Kaspy/max" target="_blank">/api/Kaspy/max</a> | 
+          <a href="/api/Kango/max" target="_blank">/api/Kango/max</a>
         </small>
       </div>
       
@@ -64,8 +64,8 @@ export default function handler(req, res) {
         Get all data for any token as JSON<br>
         <small>Examples: 
           <a href="/api/NACHO" target="_blank">/api/NACHO</a> | 
-          <a href="/api/Kasper" target="_blank">/api/Kasper</a> | 
-          <a href="/api/Pepe" target="_blank">/api/Pepe</a>
+          <a href="/api/Kaspy" target="_blank">/api/Kaspy</a> | 
+          <a href="/api/Kango" target="_blank">/api/Kango</a>
         </small>
       </div>
       
@@ -74,8 +74,8 @@ export default function handler(req, res) {
         Get max supply for any token (defaults to NACHO if no token specified)<br>
         <small>Examples: 
           <a href="/api/max?token=NACHO" target="_blank">/api/max?token=NACHO</a> | 
-          <a href="/api/max?token=Kasper" target="_blank">/api/max?token=Kasper</a> | 
-          <a href="/api/max?token=Pepe" target="_blank">/api/max?token=Pepe</a> | 
+          <a href="/api/max?token=Kaspy" target="_blank">/api/max?token=Kaspy</a> | 
+          <a href="/api/max?token=Kango" target="_blank">/api/max?token=Kango</a> | 
           <a href="/api/max" target="_blank">/api/max</a> (defaults to NACHO)
         </small>
       </div>
@@ -86,8 +86,8 @@ export default function handler(req, res) {
         Direct access to Kasplex API for token information<br>
         <small>Examples: 
           <a href="https://api.kasplex.org/v1/krc20/token/NACHO" target="_blank">NACHO</a> | 
-          <a href="https://api.kasplex.org/v1/krc20/token/Kasper" target="_blank">Kasper</a> | 
-          <a href="https://api.kasplex.org/v1/krc20/token/Pepe" target="_blank">Pepe</a>
+          <a href="https://api.kasplex.org/v1/krc20/token/Kaspy" target="_blank">Kaspy</a> | 
+          <a href="https://api.kasplex.org/v1/krc20/token/Kango" target="_blank">Kango</a>
         </small>
       </div>
       
@@ -100,14 +100,14 @@ export default function handler(req, res) {
       <h2>🔧 Usage Examples:</h2>
       <pre><code># Get max supply for different tokens using query parameter
 curl https://${req.headers.host}/api/max?token=NACHO
-curl https://${req.headers.host}/api/max?token=Kasper  
-curl https://${req.headers.host}/api/max?token=Pepe
+curl https://${req.headers.host}/api/max?token=Kaspy  
+curl https://${req.headers.host}/api/max?token=Kango
 curl https://${req.headers.host}/api/max  # defaults to NACHO
 
 # Get max supply using token path
 curl https://${req.headers.host}/api/NACHO/max
-curl https://${req.headers.host}/api/Kasper/max
-curl https://${req.headers.host}/api/Pepe/max
+curl https://${req.headers.host}/api/Kaspy/max
+curl https://${req.headers.host}/api/Kango/max
 
 # Get holder count for any token
 curl https://${req.headers.host}/api/ETHEREUM/holderTotal
@@ -117,13 +117,13 @@ curl https://${req.headers.host}/api/NACHO
 
 # Direct Kasplex API access
 curl https://api.kasplex.org/v1/krc20/token/NACHO
-curl https://api.kasplex.org/v1/krc20/token/Kasper</code></pre>
+curl https://api.kasplex.org/v1/krc20/token/Kaspy</code></pre>
       
       <pre><code>// JavaScript examples
 // Get max supply using query parameter (new generic method)
 const nachoMax = await fetch('/api/max?token=NACHO').then(r => r.text());
-const kasperMax = await fetch('/api/max?token=Kasper').then(r => r.text());
-const pepeMax = await fetch('/api/max?token=Pepe').then(r => r.text());
+const kaspyMax = await fetch('/api/max?token=Kaspy').then(r => r.text());
+const kangoMax = await fetch('/api/max?token=Kango').then(r => r.text());
 const defaultMax = await fetch('/api/max').then(r => r.text()); // defaults to NACHO
 
 // Get max supply using token path 
