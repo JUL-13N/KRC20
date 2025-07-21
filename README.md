@@ -106,7 +106,7 @@ Displays an interactive HTML documentation page when no token parameter is provi
 
 ## 🔧 How It Works
 
-1. **Proxy Layer**: Acts as a simplified proxy to the [Kasplex API](https://api.kasplex.org/v1/krc20/token/)
+1. **Proxy Layer**: Acts as a simplified proxy to the [Kasplex API](https://api.kasplex.org/v1/krc20/token/nacho)
 2. **Decimal Normalization**: Automatically adjusts values based on each token's decimal precision
 3. **Multiple Formats**: Provides both JSON (complete data) and plain text (supply only) responses
 4. **Error Handling**: Graceful fallbacks with appropriate HTTP status codes
@@ -199,7 +199,7 @@ Example error response:
 
 ## 🔗 Data Source
 
-This API fetches data from the official [Kasplex API](https://docs-kasplex.gitbook.io/krc20/tools-and-reference/kasplex-indexer-api/krc-20/get-token-info), which provides comprehensive KRC20 token indexing for the Kaspa network.
+This API fetches data from the official [Kasplex Gitbook](https://docs-kasplex.gitbook.io/krc20/tools-and-reference/kasplex-indexer-api/krc-20/get-token-info), which provides comprehensive KRC20 token indexing for the Kaspa network.
 
 ## 📝 License
 
