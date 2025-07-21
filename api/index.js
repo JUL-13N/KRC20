@@ -103,7 +103,7 @@ export default async function handler(req, res) {
         
         <h3>Get Token Max Supply</h3>
         <div class="endpoint">GET /api/max?token=&lt;TOKEN&gt;</div>
-        <p>Returns only the maximum supply value (adjusted by dividing by 100,000,000) as plain text for the specified token.</p>
+        <p>Returns only the maximum supply value as plain text for the specified token.</p>
         <div class="example">
             <strong>Example:</strong><br>
             <a href="/api/max?token=nacho">/api/max?token=nacho</a><br>
@@ -113,7 +113,7 @@ export default async function handler(req, res) {
         
         <h3>Get Token Circulating Supply</h3>
         <div class="endpoint">GET /api/circulating?token=&lt;TOKEN&gt;</div>
-        <p>Returns the circulating supply as plain text, calculated using the formula: (max - pre) ÷ 100,000,000.</p>
+        <p>Returns the circulating supply as plain text, accounting for pre-minted supply (e.g. team wallets).</p>
         <div class="example">
             <strong>Example:</strong><br>
             <a href="/api/circulating?token=nacho">/api/circulating?token=nacho</a><br>
