@@ -157,7 +157,8 @@ export default async function handler(req, res) {
             • Burnt Supply = "burned" field<br>
             • Decimals = "dec" decimal precision field
         </div>
-        
+        <br>
+
         <h3>Unlocked Circulating Supply Formula</h3>
         <div class="formula-alt">
             <strong>Unlocked Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply</strong><br><br>
@@ -176,8 +177,9 @@ export default async function handler(req, res) {
                 <li><strong>Circulating Supply:</strong> Excludes insider/pre-minted tokens from max supply</li>
                 <li><strong>Unlocked Circulating Supply:</strong> Accounts for all minted, burned, and locked tokens</li>
             </ul>
-        </div>
-        
+        </div> 
+        <br>
+
         <h2>🔧 Usage</h2>
         <p>This API acts as a proxy to the <a href="https://api.kasplex.org/v1/krc20/token/nacho" target="_blank">Kasplex API</a> with simplified endpoints and enhanced supply calculations for easy integration.</p>
         
