@@ -145,7 +145,7 @@ export default async function handler(req, res) {
         
         <h2>🧮 Supply Calculation Formulas</h2>
         
-        <h3>Circulating Supply Formula (circulating.js)</h3>
+        <h3>Circulating Supply Formula</h3>
         <div class="formula">
             <strong>Circulating Supply = (Max Supply - Insider Supply - Burnt Supply) / 10^decimals</strong><br><br>
             Where:<br>
@@ -155,7 +155,7 @@ export default async function handler(req, res) {
             • Decimals = "dec" field
         </div>
         
-        <h3>Unlocked Circulating Supply Formula (unlocked-circulating.js)</h3>
+        <h3>Unlocked Circulating Supply Formula</h3>
         <div class="formula-alt">
             <strong>Unlocked Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply</strong><br><br>
             Where:<br>
