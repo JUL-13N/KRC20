@@ -134,7 +134,7 @@ export default async function handler(req, res) {
         
         <div class="footer">
             <p>🔗 <a href="https://github.com/JUL-13N/KRC20" target="_blank">View Source Code</a></p>
-            <p>Powered by <a href="https://docs-kasplex.gitbook.io/krc20/tools-and-reference/kasplex-indexer-api/krc-20/get-token-info" target="_blank">Kasplex KRC20 Gitbook Docs</a></p>
+            <p>Powered by <a href="https://docs-kasplex.gitbook.io/krc20/tools-and-reference/kasplex-indexer-api/krc-20/get-token-info" target="_blank">Kasplex Gitbook Docs</a></p>
         </div>
     </div>
 </body>
