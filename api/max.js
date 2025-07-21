@@ -2,7 +2,6 @@
 // Usage: /api/max?token=<TOKEN> (returns just max value for any given token)
 // Usage: /api?token=<TOKEN> (returns all token info for <TOKEN>)
 // Default token is NACHO if no token parameter is provided
-
 export default async function handler(req, res) {
   // Add CORS headers to make API publicly accessible
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -43,10 +42,15 @@ export default async function handler(req, res) {
       if (!maxValue) {
         return res.status(404).json({ error: `Max value not found for token: ${token}` });
       }
-      // Return just the max value as a plain text response
-      res.status(200).send(maxValue);
+      // Divide max value by 100,000,000 and return as plain text
+      const adjustedMaxValue = maxValue / 100000000;
+      res.status(200).send(adjustedMaxValue.toString());
     } else {
-      // This is the /api endpoint, return all token data as JSON
+      // This is the /api endpoint, modify the max value before returning
+      if (tokenData.max) {
+        tokenData.max = tokenData.max / 100000000;
+      }
+      // Return all token data as JSON with adjusted max value
       res.status(200).json(tokenData);
     }
     
