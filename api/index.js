@@ -46,15 +46,15 @@ export default function handler(req, res) {
         <strong>GET</strong> <code>/api/token/{TOKEN}/{FIELD}</code><br>
         Get specific field for any token<br>
         <small>Examples: 
-          <a href="/api/token/NACHO/max" target="_blank">/api/token/NACHO/max</a> | 
-          <a href="/api/token/NACHO/minted" target="_blank">/api/token/NACHO/minted</a>
+          <a href="/api/NACHO/max" target="_blank">/api/NACHO/max</a> | 
+          <a href="/api/NACHO/minted" target="_blank">/api/NACHO/minted</a>
         </small>
       </div>
       
       <div class="endpoint">
-        <strong>GET</strong> <code>/api/token/{TOKEN}</code><br>
+        <strong>GET</strong> <code>/api/{TOKEN}</code><br>
         Get all data for any token as JSON<br>
-        <small>Example: <a href="/api/token/NACHO" target="_blank">/api/token/NACHO</a></small>
+        <small>Example: <a href="/api/NACHO" target="_blank">/api/NACHO</a></small>
       </div>
       
       <div class="endpoint">
@@ -72,31 +72,31 @@ export default function handler(req, res) {
       <h2>💻 Source Code:</h2>
       <p>This API is open source! View the code on GitHub:</p>
       <p><a href="https://github.com/yourusername/your-repo" target="_blank">
-        https://github.com/yourusername/your-repo
+        https://github.com/JUL-13N/KRC20
       </a></p>
       
       <h2>🔧 Usage Examples:</h2>
       <pre><code># Get NACHO max supply
-curl https://${req.headers.host}/api/token/NACHO/max
+curl https://${req.headers.host}/api/NACHO/max
 
 # Get any token's minted amount  
-curl https://${req.headers.host}/api/token/BITCOIN/minted
+curl https://${req.headers.host}/api/BITCOIN/minted
 
 # Get holder count for any token
-curl https://${req.headers.host}/api/token/ETHEREUM/holderTotal
+curl https://${req.headers.host}/api/ETHEREUM/holderTotal
 
 # Get all data for a token
-curl https://${req.headers.host}/api/token/NACHO</code></pre>
+curl https://${req.headers.host}/api/NACHO</code></pre>
       
       <pre><code>// JavaScript examples
 // Get specific field
-const maxSupply = await fetch('/api/token/NACHO/max').then(r => r.text());
+const maxSupply = await fetch('/api/NACHO/max').then(r => r.text());
 
 // Get all token info  
-const tokenData = await fetch('/api/token/NACHO').then(r => r.json());
+const tokenData = await fetch('/api/NACHO').then(r => r.json());
 
 // Check available fields
-const fields = await fetch('/api/info/NACHO').then(r => r.json());</code></pre>
+const fields = await fetch('/api/NACHO').then(r => r.json());</code></pre>
       
       <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #333; color: #888;">
         <small>No rate limits • No API key required • CORS enabled</small>
