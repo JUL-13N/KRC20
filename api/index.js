@@ -101,7 +101,7 @@ export default async function handler(req, res) {
             <a href="/api?token=kaspy">/api?token=kaspy</a>
         </div>
         
-        <h3>Get Token Max Supply Only</h3>
+        <h3>Get Token Max Supply</h3>
         <div class="endpoint">GET /api/max?token=&lt;TOKEN&gt;</div>
         <p>Returns only the maximum supply value as plain text for the specified token.</p>
         <div class="example">
