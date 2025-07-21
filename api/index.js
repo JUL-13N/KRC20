@@ -86,14 +86,14 @@ export default function handler(req, res) {
         Direct access to Kasplex API for token information<br>
         <small>Examples: 
           <a href="https://api.kasplex.org/v1/krc20/token/NACHO" target="_blank">NACHO</a> | 
-          <a href="https://api.kasplex.org/v1/krc20/token/KASPY" target="_blank">KASPY</a> | 
           <a href="https://api.kasplex.org/v1/krc20/token/ZEAL" target="_blank">ZEAL</a>
+          <a href="https://api.kasplex.org/v1/krc20/token/KASPY" target="_blank">KASPY</a> | 
         </small>
       </div>
       
       <h2>💻 Source Code:</h2>
       <p>This API is open source! View the code on GitHub:</p>
-      <p><a href="https://github.com/yourusername/your-repo" target="_blank">
+      <p><a href="https://github.com/JUL-13N/KRC20" target="_blank">
         https://github.com/JUL-13N/KRC20
       </a></p>
       
