@@ -103,12 +103,22 @@ export default async function handler(req, res) {
         
         <h3>Get Token Max Supply</h3>
         <div class="endpoint">GET /api/max?token=&lt;TOKEN&gt;</div>
-        <p>Returns only the maximum supply value as plain text for the specified token.</p>
+        <p>Returns only the maximum supply value (adjusted by dividing by 100,000,000) as plain text for the specified token.</p>
         <div class="example">
             <strong>Example:</strong><br>
             <a href="/api/max?token=nacho">/api/max?token=nacho</a><br>
             <a href="/api/max?token=kango">/api/max?token=kango</a><br>
             <a href="/api/max?token=kaspy">/api/max?token=kaspy</a>
+        </div>
+        
+        <h3>Get Token Circulating Supply</h3>
+        <div class="endpoint">GET /api/circulating?token=&lt;TOKEN&gt;</div>
+        <p>Returns the circulating supply as plain text, calculated using the formula: (max - pre) ÷ 100,000,000.</p>
+        <div class="example">
+            <strong>Example:</strong><br>
+            <a href="/api/circulating?token=nacho">/api/circulating?token=nacho</a><br>
+            <a href="/api/circulating?token=kango">/api/circulating?token=kango</a><br>
+            <a href="/api/circulating?token=kaspy">/api/circulating?token=kaspy</a>
         </div>
         
         <div class="note">
@@ -124,7 +134,8 @@ export default async function handler(req, res) {
         <h3>Response Format</h3>
         <ul>
             <li><strong>/api?token=X</strong> - Returns full JSON object with all token data</li>
-            <li><strong>/api/max?token=X</strong> - Returns plain text with just the max supply value</li>
+            <li><strong>/api/max?token=X</strong> - Returns plain text with the max supply value (÷ 100,000,000)</li>
+            <li><strong>/api/circulating?token=X</strong> - Returns plain text with circulating supply ((max - pre) ÷ 100,000,000)</li>
         </ul>
         
         <div class="footer">
