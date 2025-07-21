@@ -147,12 +147,12 @@ export default async function handler(req, res) {
         
         <h3>Circulating Supply Formula</h3>
         <div class="formula">
-            <strong>Circulating Supply = (Max Supply - Insider Supply - Burnt Supply) / 10^Decimal Precision</strong><br><br>
+            <strong>Circulating Supply = (Max Supply - Insider Supply - Burnt Supply) / 10^Decimals</strong><br><br>
             Where:<br>
             • Max Supply = "max" field<br>
             • Insider Supply = "pre"-minted supply<br>
             • Burnt Supply = "burned" field<br>
-            • Decimal Precision = "dec" field
+            • Decimals = "dec" decimal precision field
         </div>
         
         <h3>Unlocked Circulating Supply Formula</h3>
