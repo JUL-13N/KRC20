@@ -86,8 +86,8 @@ export default async function handler(req, res) {
 </head>
 <body>
     <div class="container">
-        <h1>🪙 KRC20 Token API</h1>
-        <p class="subtitle">Simple API to fetch KRC20 token information from Kasplex</p>
+        <h1>🪙 Kaspa KRC20 Token API</h1>
+        <p class="subtitle">Simple API to fetch token information from Kasplex</p>
         
         <h2>📋 Endpoints</h2>
         
