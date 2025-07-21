@@ -99,12 +99,12 @@ export default async function handler(req, res) {
             <a href="/api?token=nacho">/api?token=nacho</a>
         </div>
         
-        <h3>Get Token Max Supply</h3>
-        <div class="endpoint">GET /api/max?token={ticker}</div>
-        <p>Returns the maximum supply value as plain text for the specified token.</p>
+        <h3>Get Token Total Supply</h3>
+        <div class="endpoint">GET /api/total?token={ticker}</div>
+        <p>Returns the total supply value as plain text for the specified token.</p>
         <div class="example">
             <strong>Example:</strong><br>
-            <a href="/api/max?token=nacho">/api/max?token=nacho</a>
+            <a href="/api/total?token=nacho">/api/total?token=nacho</a>
         </div>
         
         <h3>Get Token Circulating Supply</h3>
@@ -127,9 +127,9 @@ export default async function handler(req, res) {
         
         <h3>Response Format</h3>
         <ul>
-            <li><strong>/api?token=X</strong> - Returns full JSON object of live token data, deriving max and ciculating supply.</li>
-            <li><strong>/api/max?token=X</strong> - Returns the max supply, normalized by the given decimal precision.</li>
-            <li><strong>/api/circulating?token=X</strong> - Returns the max supply subtracted by the pre-minted supply, normalized by the given decimal precision.</li>
+            <li><strong>/api?token=X</strong> - Returns full JSON object of live token data, deriving total and ciculating supply.</li>
+            <li><strong>/api/total?token=X</strong> - Returns the total supply, normalized by the given decimal precision.</li>
+            <li><strong>/api/circulating?token=X</strong> - Returns the total supply subtracted by the pre-minted supply, normalized by the given decimal precision.</li>
         </ul>
         
         <div class="footer">
