@@ -1,6 +1,5 @@
 // File: api/max.js
-// Usage: /api/max?token=NACHO
-
+// Usage: /api/max?token=NACHO (or any other token)
 export default async function handler(req, res) {
   // Add CORS headers to make API publicly accessible
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -12,8 +11,11 @@ export default async function handler(req, res) {
   res.setHeader('X-API-Version', '1.0.0');
   
   try {
-    // Fetch data from the original API
-    const response = await fetch('https://api.kasplex.org/v1/krc20/token/NACHO');
+    // Get the token from query parameter, default to NACHO if not provided
+    const token = req.query.token || 'NACHO';
+    
+    // Fetch data from the original API using the specified token
+    const response = await fetch(`https://api.kasplex.org/v1/krc20/token/${token}`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -25,14 +27,15 @@ export default async function handler(req, res) {
     const maxValue = data.result?.[0]?.max;
     
     if (!maxValue) {
-      return res.status(404).json({ error: 'Max value not found' });
+      return res.status(404).json({ error: `Max value not found for token: ${token}` });
     }
     
     // Return just the max value as a plain text response
     res.status(200).send(maxValue);
     
   } catch (error) {
-    console.error('Error fetching NACHO data:', error);
-    res.status(500).json({ error: 'Failed to fetch NACHO max value' });
+    const token = req.query.token || 'NACHO';
+    console.error(`Error fetching ${token} data:`, error);
+    res.status(500).json({ error: `Failed to fetch ${token} max value` });
   }
 }
