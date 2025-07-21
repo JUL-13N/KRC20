@@ -70,9 +70,14 @@ export default function handler(req, res) {
       </div>
       
       <div class="endpoint">
-        <strong>GET</strong> <code>/api/max</code><br>
-        Legacy endpoint for NACHO max supply<br>
-        <small>Example: <a href="/api/max" target="_blank">Try it now</a></small>
+        <strong>GET</strong> <code>/api/max?token={TOKEN}</code><br>
+        Get max supply for any token (defaults to NACHO if no token specified)<br>
+        <small>Examples: 
+          <a href="/api/max?token=NACHO" target="_blank">/api/max?token=NACHO</a> | 
+          <a href="/api/max?token=Kasper" target="_blank">/api/max?token=Kasper</a> | 
+          <a href="/api/max?token=Pepe" target="_blank">/api/max?token=Pepe</a> | 
+          <a href="/api/max" target="_blank">/api/max</a> (defaults to NACHO)
+        </small>
       </div>
       
       <h2>🔗 Kasplex Legacy Endpoints:</h2>
@@ -93,7 +98,13 @@ export default function handler(req, res) {
       </a></p>
       
       <h2>🔧 Usage Examples:</h2>
-      <pre><code># Get max supply for different tokens
+      <pre><code># Get max supply for different tokens using query parameter
+curl https://${req.headers.host}/api/max?token=NACHO
+curl https://${req.headers.host}/api/max?token=Kasper  
+curl https://${req.headers.host}/api/max?token=Pepe
+curl https://${req.headers.host}/api/max  # defaults to NACHO
+
+# Get max supply using token path
 curl https://${req.headers.host}/api/NACHO/max
 curl https://${req.headers.host}/api/Kasper/max
 curl https://${req.headers.host}/api/Pepe/max
@@ -109,10 +120,14 @@ curl https://api.kasplex.org/v1/krc20/token/NACHO
 curl https://api.kasplex.org/v1/krc20/token/Kasper</code></pre>
       
       <pre><code>// JavaScript examples
-// Get specific field for different tokens
-const nachoMax = await fetch('/api/NACHO/max').then(r => r.text());
-const kasperMax = await fetch('/api/Kasper/max').then(r => r.text());
-const pepeMax = await fetch('/api/Pepe/max').then(r => r.text());
+// Get max supply using query parameter (new generic method)
+const nachoMax = await fetch('/api/max?token=NACHO').then(r => r.text());
+const kasperMax = await fetch('/api/max?token=Kasper').then(r => r.text());
+const pepeMax = await fetch('/api/max?token=Pepe').then(r => r.text());
+const defaultMax = await fetch('/api/max').then(r => r.text()); // defaults to NACHO
+
+// Get max supply using token path 
+const nachoMaxPath = await fetch('/api/NACHO/max').then(r => r.text());
 
 // Get all token info  
 const tokenData = await fetch('/api/NACHO').then(r => r.json());
