@@ -127,7 +127,7 @@ export default async function handler(req, res) {
         
         <h3>Response Format</h3>
         <ul>
-            <li><strong>/api?token=X</strong> - Returns full JSON object of live token data, deriving max and ciculating supplies.</li>
+            <li><strong>/api?token=X</strong> - Returns full JSON object of live token data, deriving max and ciculating supply.</li>
             <li><strong>/api/max?token=X</strong> - Returns the max supply, normalized by the given decimal precision.</li>
             <li><strong>/api/circulating?token=X</strong> - Returns the max supply subtracted by the pre-minted supply, normalized by the given decimal precision.</li>
         </ul>
