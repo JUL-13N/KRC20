@@ -1,9 +1,8 @@
 // File: api/max.js
+// Purpose: Serve complete token data and the max supply from Kasplex API, normalized by decimal precision.
 // Usage: /api/max?token={ticker} (returns just max value for any given token)
 // Usage: /api?token={ticker} (returns all token info for {ticker})
 // Default token is NACHO if no token parameter is provided
-
-// Purpose: Serve token data (max supply) from Kasplex API, normalized by decimal precision.
 
 // Entry point for the serverless API route
 export default async function handler(req, res) {
