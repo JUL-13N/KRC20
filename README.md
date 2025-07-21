@@ -33,17 +33,26 @@ curl "https://your-api.vercel.app/api?token=nacho"
 ```json
 {
   "tick": "NACHO",
-  "max": 21000000,
-  "lim": 1000,
-  "pre": 0,
-  "to": "kaspa:address...",
-  "dec": 8,
-  "minted": 15000000,
-  "burned": 0,
+  "max": "28700000000000000000",
+  "lim": "2870000000000",
+  "pre": "0",
+  "to": "kaspa:qzrsq2mfj9sf7uye3u5q7juejzlr0axk5jz9fpg4vqe76erdyvxxze84k9nk7",
+  "dec": "8",
+  "mod": "mint",
+  "minted": "28700000000000000000",
+  "burned": "0",
+  "opScoreAdd": "834430020006",
+  "opScoreMod": "901615480027",
+  "state": "finished",
+  "hashRev": "85359b7768ba60cde4559b6e03ef2685d27ca7be3b1fa2cda976743e17f7c3ad",
+  "mtsAdd": "1719757838224",
+  "holderTotal": "18136",
+  "transferTotal": "259524",
+  "mintTotal": "10000000",
   "holder": [
     {
       "address": "kaspa:address...",
-      "amount": 500000
+      "amount": 1234567890
     }
   ]
 }
@@ -58,7 +67,7 @@ Returns the total supply as plain text, normalized by decimal precision.
 **Example:**
 ```bash
 curl "https://your-api.vercel.app/api/total?token=nacho"
-# Returns: 21000000
+# Returns: 287000000000
 ```
 
 ### 3. Circulating Supply
@@ -70,7 +79,7 @@ Returns the circulating supply as plain text (total supply minus pre-minted toke
 **Example:**
 ```bash
 curl "https://your-api.vercel.app/api/circulating?token=nacho"
-# Returns: 21000000
+# Returns: 287000000000
 ```
 
 ### 4. Landing Page
@@ -148,7 +157,7 @@ curl "https://your-api.vercel.app/api/circulating?token=nacho"
 
 ## 🎯 Supported Tokens
 
-This API works with any KRC20 token available on the Kaspa network. Popular token example:
+This API works with any KRC20 token available on the Kaspa network. Token example:
 
 - `nacho` - Nacho the Kat (NACHO) token
 - And many others...
