@@ -1,147 +1,165 @@
 // File: api/index.js
-// This creates a landing page at https://kaspage.vercel.app/api/
-export default function handler(req, res) {
-  res.setHeader('Content-Type', 'text/html');
+// Usage: Shows landing page when accessing /api/ without query parameters
+
+export default async function handler(req, res) {
+  // Add CORS headers to make API publicly accessible
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>NACHO Token API</title>
-      <meta charset="utf-8">
-      <style>
-        body { 
-          font-family: system-ui, -apple-system, sans-serif; 
-          max-width: 800px; 
-          margin: 50px auto; 
-          padding: 20px;
-          background: #1a1a1a;
-          color: #ffffff;
-        }
-        .endpoint { 
-          background: #2d2d2d; 
-          padding: 15px; 
-          border-radius: 8px; 
-          margin: 10px 0;
-          border-left: 4px solid #00d4ff;
-        }
-        .legacy-endpoint {
-          background: #2d2d2d; 
-          padding: 15px; 
-          border-radius: 8px; 
-          margin: 10px 0;
-          border-left: 4px solid #ff9500;
-        }
-        a { color: #00d4ff; }
-        .legacy a { color: #ff9500; }
-        code { 
-          background: #000; 
-          padding: 2px 6px; 
-          border-radius: 4px;
-          color: #00ff88;
-        }
-      </style>
-    </head>
-    <body>
-      <h1>🪙 KRC-20 Token API</h1>
-      
-      <p>Free public API for <strong>ANY</strong> KRC-20 token data on Kaspa blockchain.</p>
-      
-      <h2>📡 Available Endpoints:</h2>
-      
-      <div class="endpoint">
-        <strong>GET</strong> <code>/api/token/{TOKEN}/{FIELD}</code><br>
-        Get specific field for any token<br>
-        <small>Examples: 
-          <a href="/api/NACHO/max" target="_blank">/api/NACHO/max</a> | 
-          <a href="/api/KANGO/max" target="_blank">/api/KANGO/max</a>
-          <a href="/api/KASPY/max" target="_blank">/api/KASPY/max</a> | 
-        </small>
-      </div>
-      
-      <div class="endpoint">
-        <strong>GET</strong> <code>/api/{TOKEN}</code><br>
-        Get all data for any token as JSON<br>
-        <small>Examples: 
-          <a href="/api/NACHO" target="_blank">/api/NACHO</a> | 
-          <a href="/api/KANGO" target="_blank">/api/KANGO</a>
-          <a href="/api/KASPY" target="_blank">/api/KASPY</a> | \
-        </small>
-      </div>
-      
-      <div class="endpoint">
-        <strong>GET</strong> <code>/api/max?token={TOKEN}</code><br>
-        Get max supply for any token (defaults to NACHO if no token specified)<br>
-        <small>Examples: 
-          <a href="/api/max?token=NACHO" target="_blank">/api/max?token=NACHO</a> | 
-          <a href="/api/max?token=KANGO" target="_blank">/api/max?token=KANGO</a> | 
-          <a href="/api/max?token=KASPY" target="_blank">/api/max?token=KASPY</a> | 
-          <a href="/api/max" target="_blank">/api/max</a> (defaults to NACHO)
-        </small>
-      </div>
-      
-      <h2>🔗 Kasplex Legacy Endpoints:</h2>
-      <div class="legacy-endpoint legacy">
-        <strong>GET</strong> <code>https://api.kasplex.org/v1/krc20/token/{TOKEN}</code><br>
-        Direct access to Kasplex API for token information<br>
-        <small>Examples: 
-          <a href="https://api.kasplex.org/v1/krc20/token/NACHO" target="_blank">NACHO</a> | 
-          <a href="https://api.kasplex.org/v1/krc20/token/KANGO" target="_blank">KANGO</a>
-          <a href="https://api.kasplex.org/v1/krc20/token/KASPY" target="_blank">KASPY</a> | 
-        </small>
-      </div>
-      
-      <h2>💻 Source Code:</h2>
-      <p>This API is open source! View the code on GitHub:</p>
-      <p><a href="https://github.com/JUL-13N/KRC20" target="_blank">
-        https://github.com/JUL-13N/KRC20
-      </a></p>
-      
-      <h2>🔧 Usage Examples:</h2>
-      <pre><code># Get max supply for different tokens using query parameter
-curl https://${req.headers.host}/api/max?token=NACHO
-curl https://${req.headers.host}/api/max?token=KANGO
-curl https://${req.headers.host}/api/max?token=KASPY  
-curl https://${req.headers.host}/api/max  # defaults to NACHO
-
-# Get max supply using token path
-curl https://${req.headers.host}/api/NACHO/max
-curl https://${req.headers.host}/api/KANGO/max
-curl https://${req.headers.host}/api/KASPY/max
-
-# Get holder count for any token
-curl https://${req.headers.host}/api/ETHEREUM/holderTotal
-
-# Get all data for a token
-curl https://${req.headers.host}/api/NACHO
-
-# Direct Kasplex API access
-curl https://api.kasplex.org/v1/krc20/token/NACHO
-curl https://api.kasplex.org/v1/krc20/token/KANGO</code></pre>
-      
-      <pre><code>// JavaScript examples
-// Get max supply using query parameter (new generic method)
-const nachoMax = await fetch('/api/max?token=NACHO').then(r => r.text());
-const kangoMax = await fetch('/api/max?token=KANGO').then(r => r.text());
-const kaspyMax = await fetch('/api/max?token=KASPY').then(r => r.text());
-const defaultMax = await fetch('/api/max').then(r => r.text()); // defaults to NACHO
-
-// Get max supply using token path 
-const nachoMaxPath = await fetch('/api/NACHO/max').then(r => r.text());
-
-// Get all token info  
-const tokenData = await fetch('/api/NACHO').then(r => r.json());
-
-// Direct Kasplex API access
-const kasplex = await fetch('https://api.kasplex.org/v1/krc20/token/NACHO')
-  .then(r => r.json());</code></pre>
-      
-      <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #333; color: #888;">
-        <small>No rate limits • No API key required • CORS enabled</small>
-      </footer>
-    </body>
-    </html>
-  `;
+  // Add custom headers to show GitHub repo
+  res.setHeader('X-Source-Code', 'https://github.com/JUL-13N/KRC20');
+  res.setHeader('X-API-Version', '1.0.0');
   
-  res.status(200).send(html);
+  try {
+    // Get the token from query parameter
+    const token = req.query.token;
+    
+    // If no token parameter is provided, show the landing page
+    if (!token) {
+      res.setHeader('Content-Type', 'text/html');
+      return res.status(200).send(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRC20 Token API</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .endpoint {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+        }
+        .example {
+            background: #e8f5e8;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #7f8c8d;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🪙 KRC20 Token API</h1>
+        <p class="subtitle">Simple API to fetch KRC20 token information from Kasplex</p>
+        
+        <h2>📋 Endpoints</h2>
+        
+        <h3>Get Full Token Information</h3>
+        <div class="endpoint">GET /api?token=&lt;TOKEN&gt;</div>
+        <p>Returns complete token information as JSON for the specified token.</p>
+        <div class="example">
+            <strong>Example:</strong><br>
+            <a href="/api?token=nacho">/api?token=nacho</a><br>
+            <a href="/api?token=kango">/api?token=kango</a><br>
+            <a href="/api?token=kaspy">/api?token=kaspy</a>
+        </div>
+        
+        <h3>Get Token Max Supply Only</h3>
+        <div class="endpoint">GET /api/max?token=&lt;TOKEN&gt;</div>
+        <p>Returns only the maximum supply value as plain text for the specified token.</p>
+        <div class="example">
+            <strong>Example:</strong><br>
+            <a href="/api/max?token=nacho">/api/max?token=nacho</a><br>
+            <a href="/api/max?token=kango">/api/max?token=kango</a><br>
+            <a href="/api/max?token=kaspy">/api/max?token=kaspy</a>
+        </div>
+        
+        <div class="note">
+            <strong>📌 Note:</strong> If no token parameter is provided, defaults to NACHO token.
+        </div>
+        
+        <h2>🔧 Usage</h2>
+        <p>This API acts as a proxy to the <a href="https://api.kasplex.org/v1/krc20/token/" target="_blank">Kasplex API</a> with simplified endpoints for easy integration.</p>
+        
+        <h3>Supported Tokens</h3>
+        <p>Popular tokens include: <code>nacho</code>, <code>kango</code>, <code>kaspy</code>, and many others available on the Kaspa network.</p>
+        
+        <h3>Response Format</h3>
+        <ul>
+            <li><strong>/api?token=X</strong> - Returns full JSON object with all token data</li>
+            <li><strong>/api/max?token=X</strong> - Returns plain text with just the max supply value</li>
+        </ul>
+        
+        <div class="footer">
+            <p>🔗 <a href="https://github.com/JUL-13N/KRC20" target="_blank">View Source Code</a></p>
+            <p>Powered by <a href="https://kasplex.org" target="_blank">Kasplex API</a></p>
+        </div>
+    </div>
+</body>
+</html>
+      `);
+    }
+    
+    // If token parameter is provided, handle the token request
+    // Fetch data from the original API using the specified token
+    const response = await fetch(`https://api.kasplex.org/v1/krc20/token/${token}`);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    // Check if we have valid data
+    if (!data.result || !data.result[0]) {
+      return res.status(404).json({ error: `Token data not found for: ${token}` });
+    }
+    
+    const tokenData = data.result[0];
+    
+    // Return all token data as JSON
+    res.status(200).json(tokenData);
+    
+  } catch (error) {
+    const token = req.query.token || 'NACHO';
+    console.error(`Error fetching ${token} data:`, error);
+    res.status(500).json({ error: `Failed to fetch ${token} data` });
+  }
 }
