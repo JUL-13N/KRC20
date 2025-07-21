@@ -51,12 +51,12 @@ export default async function handler(req, res) {
       // Make sure total exists and is a number
       const totalValue = parseFloat(tokenData.max);
       if (isNaN(totalValue)) {
-        return res.status(404).json({ error: `Max value not found for token: ${token}` });
+        return res.status(404).json({ error: `Total value not found for token: ${token}` });
       }
 
       // 📐 Normalize total value by decimal divisor
-      const adjustedMaxValue = totalValue / divisor;
-      return res.status(200).send(adjustedMaxValue.toString());
+      const adjustedTotalValue = totalValue / divisor;
+      return res.status(200).send(adjustedTotalValue.toString());
     } else {
       // 🧮 Normalize key values for /api endpoint
       if (tokenData.max) {
