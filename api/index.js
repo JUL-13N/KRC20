@@ -91,9 +91,9 @@ export default async function handler(req, res) {
         
         <h2>📋 Endpoints</h2>
         
-        <h3>Get Full Token Information</h3>
+        <h3>Get Unfiltered Token Information</h3>
         <div class="endpoint">GET /api?token=&lt;TOKEN&gt;</div>
-        <p>Returns complete token information as JSON for the specified token.</p>
+        <p>Returns real-time, unfiltered token information as JSON for the specified token.</p>
         <div class="example">
             <strong>Example:</strong><br>
             <a href="/api?token=nacho">/api?token=nacho</a><br>
@@ -103,7 +103,7 @@ export default async function handler(req, res) {
         
         <h3>Get Token Max Supply</h3>
         <div class="endpoint">GET /api/max?token=&lt;TOKEN&gt;</div>
-        <p>Returns only the maximum supply value as plain text for the specified token.</p>
+        <p>Returns the maximum supply value as plain text for the specified token.</p>
         <div class="example">
             <strong>Example:</strong><br>
             <a href="/api/max?token=nacho">/api/max?token=nacho</a><br>
