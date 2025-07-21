@@ -116,7 +116,7 @@ export default async function handler(req, res) {
         </div>
         
         <h2>🔧 Usage</h2>
-        <p>This API acts as a proxy to the <a href="https://api.kasplex.org/v1/krc20/token/" target="_blank">Kasplex API</a> with simplified endpoints for easy integration.</p>
+        <p>This API acts as a proxy to the <a href="https://api.kasplex.org/v1/krc20/token/nacho" target="_blank">Kasplex API</a> with simplified endpoints for easy integration.</p>
         
         <h3>Supported Tokens</h3>
         <p>Popular tokens include: <code>nacho</code>, <code>kango</code>, <code>kaspy</code>, and many others available on the Kaspa network.</p>
@@ -129,7 +129,7 @@ export default async function handler(req, res) {
         
         <div class="footer">
             <p>🔗 <a href="https://github.com/JUL-13N/KRC20" target="_blank">View Source Code</a></p>
-            <p>Powered by <a href="https://kasplex.org" target="_blank">Kasplex API</a></p>
+            <p>Powered by <a href="https://docs-kasplex.gitbook.io/krc20/tools-and-reference/kasplex-indexer-api/krc-20/get-token-info" target="_blank">Kasplex API</a></p>
         </div>
     </div>
 </body>
