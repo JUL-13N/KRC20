@@ -1,6 +1,6 @@
-// File: api/max.js
-// Purpose: Serve complete token data and the max supply from Kasplex API, normalized by decimal precision.
-// Usage: /api/max?token={ticker} (returns just max value for any given token)
+// File: api/total.js
+// Purpose: Serve complete token data and the total supply from Kasplex API, normalized by decimal precision.
+// Usage: /api/total?token={ticker} (returns just total value for any given token)
 // Usage: /api?token={ticker} (returns all token info for {ticker})
 // Default token is NACHO if no token parameter is provided
 
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     const token = req.query.token || 'NACHO';
 
     // 🧠 Detect endpoint type based on URL
-    const isMaxEndpoint = req.url.includes('/max');
+    const isTotalEndpoint = req.url.includes('/max');
 
     // 🔗 Fetch token data from Kasplex’s public API
     const response = await fetch(`https://api.kasplex.org/v1/krc20/token/${token}`);
@@ -46,16 +46,16 @@ export default async function handler(req, res) {
     // 📉 Calculate divisor: 10 to the power of 'decimals'
     const divisor = Math.pow(10, decimals);
 
-    // 🔓 If endpoint is /api/max, return adjusted max value only
-    if (isMaxEndpoint) {
-      // Make sure max exists and is a number
-      const maxValue = parseFloat(tokenData.max);
-      if (isNaN(maxValue)) {
+    // 🔓 If endpoint is /api/total, return adjusted total value only
+    if (isTotalEndpoint) {
+      // Make sure total exists and is a number
+      const totalValue = parseFloat(tokenData.max);
+      if (isNaN(totalValue)) {
         return res.status(404).json({ error: `Max value not found for token: ${token}` });
       }
 
-      // 📐 Normalize max value by decimal divisor
-      const adjustedMaxValue = maxValue / divisor;
+      // 📐 Normalize total value by decimal divisor
+      const adjustedMaxValue = totalValue / divisor;
       return res.status(200).send(adjustedMaxValue.toString());
     } else {
       // 🧮 Normalize key values for /api endpoint
