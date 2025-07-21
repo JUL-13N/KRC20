@@ -133,7 +133,7 @@ export default async function handler(req, res) {
         
         <h2>🧮 Circulating Supply Formula</h2>
         <div class="formula">
-            <strong>Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply</strong><br><br>
+            <strong>Unlocked Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply</strong><br><br>
             Where:<br>
             • Max Supply = "max" field<br>
             • Unminted Supply = "max" - "minted"<br>
