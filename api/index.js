@@ -64,9 +64,9 @@ export default function handler(req, res) {
       </div>
       
       <div class="endpoint">
-        <strong>GET</strong> <code>/api/nacho-max</code><br>
+        <strong>GET</strong> <code>/api/max</code><br>
         Legacy endpoint for NACHO max supply<br>
-        <small>Example: <a href="/api/nacho-max" target="_blank">Try it now</a></small>
+        <small>Example: <a href="/api/max" target="_blank">Try it now</a></small>
       </div>
       
       <h2>💻 Source Code:</h2>
