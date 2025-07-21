@@ -118,7 +118,7 @@ export default async function handler(req, res) {
             <strong>Example:</strong><br>
             <a href="/api?token=nacho">/api?token=nacho</a>
         </div>
-        <br>
+        <div style="margin-top: 8px;"></div>
         
         <h3>Get Total Token Supply</h3>
         <div class="endpoint">GET /api/total?token={ticker}</div>
@@ -127,7 +127,7 @@ export default async function handler(req, res) {
             <strong>Example:</strong><br>
             <a href="/api/total?token=nacho">/api/total?token=nacho</a>
         </div>
-        <br>
+        <div style="margin-top: 8px;"></div>
         
         <h3>Get Circulating Supply</h3>
         <div class="endpoint">GET /api/circulating?token={ticker}</div>
@@ -136,7 +136,7 @@ export default async function handler(req, res) {
             <strong>Example:</strong><br>
             <a href="/api/circulating?token=nacho">/api/circulating?token=nacho</a>
         </div>
-        <br>
+        <div style="margin-top: 8px;"></div>
         
         <h3>Get Unlocked Circulating Supply</h3>
         <div class="endpoint">GET /api/unlocked-circulating?token={ticker}</div>
