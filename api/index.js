@@ -96,9 +96,7 @@ export default async function handler(req, res) {
         <p>Returns real-time and unfiltered token information as JSON for the specified token.</p>
         <div class="example">
             <strong>Example:</strong><br>
-            <a href="/api?token=nacho">/api?token=nacho</a><br>
-            <a href="/api?token=kango">/api?token=kango</a><br>
-            <a href="/api?token=kaspy">/api?token=kaspy</a>
+            <a href="/api?token=nacho">/api?token=nacho</a>
         </div>
         
         <h3>Get Token Max Supply</h3>
@@ -106,9 +104,7 @@ export default async function handler(req, res) {
         <p>Returns the maximum supply value as plain text for the specified token.</p>
         <div class="example">
             <strong>Example:</strong><br>
-            <a href="/api/max?token=nacho">/api/max?token=nacho</a><br>
-            <a href="/api/max?token=kango">/api/max?token=kango</a><br>
-            <a href="/api/max?token=kaspy">/api/max?token=kaspy</a>
+            <a href="/api/max?token=nacho">/api/max?token=nacho</a>
         </div>
         
         <h3>Get Token Circulating Supply</h3>
@@ -116,9 +112,7 @@ export default async function handler(req, res) {
         <p>Returns the circulating supply value as plain text, accounting for pre-minted supply (e.g. team wallets).</p>
         <div class="example">
             <strong>Example:</strong><br>
-            <a href="/api/circulating?token=nacho">/api/circulating?token=nacho</a><br>
-            <a href="/api/circulating?token=kango">/api/circulating?token=kango</a><br>
-            <a href="/api/circulating?token=kaspy">/api/circulating?token=kaspy</a>
+            <a href="/api/circulating?token=nacho">/api/circulating?token=nacho</a>
         </div>
         
         <div class="note">
