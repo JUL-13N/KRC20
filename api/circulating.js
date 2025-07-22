@@ -61,6 +61,7 @@ export default async function handler(req, res) {
     const circulatingSupply = (maxValue - insiderValue - burnedValue) / divisor;
     
     // 📤 Send result as plain text response
+    res.setHeader('Content-Type', 'text/plain');
     res.status(200).send(circulatingSupply.toString());
     
   } catch (error) {
