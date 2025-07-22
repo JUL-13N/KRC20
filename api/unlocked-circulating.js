@@ -1,5 +1,5 @@
-// File: api/circulating.js
-// Purpose: Return the circulating supply for a given Kaspa KRC20 token, adjusted by its decimal precision.
+// File: api/unlocked-circulating.js
+// Purpose: Return the unlocked circulating supply for a given Kaspa KRC20 token, adjusted by its decimal precision.
 // Usage: /api/circulating?token={ticker} (returns circulating supply for any given token)
 // Default token is NACHO if no token parameter is provided
 
