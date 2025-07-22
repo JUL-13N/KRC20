@@ -13,6 +13,7 @@ export default async function handler(req, res) {
   // 📦 Metadata headers: GitHub source + API versioning
   res.setHeader('X-Source-Code', 'https://github.com/JUL-13N/KRC20');
   res.setHeader('X-API-Version', '1.0.1');
+  
   try {
     // 🔍 Token query param: fallback to 'NACHO' if none provided
     const token = req.query.token || 'NACHO';
@@ -35,6 +36,7 @@ export default async function handler(req, res) {
     const decimals = parseInt(tokenData.dec || '0', 10);
     // 📉 Calculate divisor: 10 to the power of 'decimals'
     const divisor = Math.pow(10, decimals);
+    
     // 🔓 If endpoint is /api/total, return adjusted total supply only
     if (isTotalEndpoint) {
       // Make sure total supply exists and is a number (indexing "max" field)
@@ -45,10 +47,9 @@ export default async function handler(req, res) {
       // 📐 Normalize total supply by decimal divisor
       const adjustedTotalSupply = totalSupply / divisor;
       
-      // 📤 Send result as minimal HTML with black background (to match other files)
-      res.setHeader('Content-Type', 'text/html');
-      const htmlResponse = `<!DOCTYPE html><html><head><style>body{background:#000;color:#fff;font-family:monospace;margin:20px;font-size:16px;}</style></head><body>${adjustedTotalSupply}</body></html>`;
-      return res.status(200).send(htmlResponse);
+      // 📤 Return just the total supply as plain text (matching circulating.js format)
+      res.setHeader('Content-Type', 'text/plain');
+      res.status(200).send(adjustedTotalSupply.toString());
     } else {
       // 🧮 Normalize key values for /api endpoint
       if (tokenData.max) {
