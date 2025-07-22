@@ -45,9 +45,10 @@ export default async function handler(req, res) {
       // 📐 Normalize total supply by decimal divisor
       const adjustedTotalSupply = totalSupply / divisor;
       
-      // 📤 Send result as plain text response
-      res.setHeader('Content-Type', 'text/plain');
-      return res.status(200).send(adjustedTotalSupply.toString());
+      // 📤 Send result as minimal HTML with black background (to match other files)
+      res.setHeader('Content-Type', 'text/html');
+      const htmlResponse = `<!DOCTYPE html><html><head><style>body{background:#000;color:#fff;font-family:monospace;margin:20px;font-size:16px;}</style></head><body>${adjustedTotalSupply}</body></html>`;
+      return res.status(200).send(htmlResponse);
     } else {
       // 🧮 Normalize key values for /api endpoint
       if (tokenData.max) {
