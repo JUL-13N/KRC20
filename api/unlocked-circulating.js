@@ -3,18 +3,34 @@
 // Usage: /api/circulating?token={ticker} (returns circulating supply for any given token)
 // Default token is NACHO if no token parameter is provided
 
-// Serverless route entry point
-async function fetchCirculatingSupply() {
+// Function to format numbers with commas
+function formatNumber(num) {
+  return num.toLocaleString('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 8
+  });
+}
+
+// Fetch token data from the API
+async function fetchTokenData(token = 'NACHO') {
   try {
-    // Fetch token data from the API
-    const response = await fetch('https://kaspage.vercel.app/api?token=NACHO');
+    const response = await fetch(`https://kaspage.vercel.app/api?token=${token}`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
     const data = await response.json();
-    
+    return data;
+  } catch (error) {
+    console.error('Error fetching token data:', error);
+    throw error;
+  }
+}
+
+// Calculate circulating supply
+function calculateCirculatingSupply(data) {
+  try {
     // Extract values from the API response
     const maxSupply = BigInt(data.max);
     const mintedSupply = BigInt(data.minted);
@@ -25,20 +41,14 @@ async function fetchCirculatingSupply() {
     // Calculate components
     const unmintedSupply = maxSupply - mintedSupply;
     
-    // Apply the formula: Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply
-    const circulatingSupplyRaw = maxSupply - unmintedSupply - burnedSupply - lockedSupply;
-    
-    // Simplifying: Max Supply - (Max Supply - Minted Supply) - Burnt Supply - Locked Supply
-    // = Max Supply - Max Supply + Minted Supply - Burnt Supply - Locked Supply
-    // = Minted Supply - Burnt Supply - Locked Supply
-    const simplifiedCirculatingSupplyRaw = mintedSupply - burnedSupply - lockedSupply;
+    // Formula: Circulating Supply = Minted Supply - Burnt Supply - Locked Supply
+    const circulatingSupplyRaw = mintedSupply - burnedSupply - lockedSupply;
     
     // Convert to decimal by dividing by 10^decimals
     const divisor = BigInt(10 ** decimals);
-    const circulatingSupply = Number(simplifiedCirculatingSupplyRaw) / Number(divisor);
     
     return {
-      circulatingSupply: circulatingSupply,
+      circulatingSupply: Number(circulatingSupplyRaw) / Number(divisor),
       maxSupply: Number(maxSupply) / Number(divisor),
       mintedSupply: Number(mintedSupply) / Number(divisor),
       burnedSupply: Number(burnedSupply) / Number(divisor),
@@ -47,64 +57,84 @@ async function fetchCirculatingSupply() {
       decimals: decimals,
       rawData: data
     };
-    
   } catch (error) {
-    console.error('Error fetching circulating supply:', error);
+    console.error('Error calculating circulating supply:', error);
     throw error;
   }
 }
 
-// Function to format numbers with commas
-function formatNumber(num) {
-  return num.toLocaleString('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 8
-  });
-}
-
-// Main function to get and display circulating supply
-async function getCirculatingSupply() {
+// Main serverless function handler
+export default async function handler(req, res) {
   try {
-    const result = await fetchCirculatingSupply();
+    // Enable CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     
-    console.log('NACHO Token Supply Information:');
-    console.log('================================');
-    console.log(`Circulating Supply: ${formatNumber(result.circulatingSupply)} NACHO`);
-    console.log(`Max Supply: ${formatNumber(result.maxSupply)} NACHO`);
-    console.log(`Minted Supply: ${formatNumber(result.mintedSupply)} NACHO`);
-    console.log(`Burned Supply: ${formatNumber(result.burnedSupply)} NACHO`);
-    console.log(`Locked Supply: ${formatNumber(result.lockedSupply)} NACHO`);
-    console.log(`Unminted Supply: ${formatNumber(result.unmintedSupply)} NACHO`);
-    console.log(`Decimals: ${result.decimals}`);
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      return;
+    }
     
-    return result.circulatingSupply;
+    // Only allow GET requests
+    if (req.method !== 'GET') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
+    
+    // Get token from query parameter, default to NACHO
+    const token = req.query.token || 'NACHO';
+    
+    // Validate token parameter (basic validation)
+    if (typeof token !== 'string' || token.length === 0 || token.length > 20) {
+      return res.status(400).json({ error: 'Invalid token parameter' });
+    }
+    
+    // Fetch token data
+    const tokenData = await fetchTokenData(token.toUpperCase());
+    
+    // Calculate circulating supply
+    const result = calculateCirculatingSupply(tokenData);
+    
+    // Return the result
+    res.status(200).json({
+      success: true,
+      token: token.toUpperCase(),
+      circulatingSupply: result.circulatingSupply,
+      formattedCirculatingSupply: formatNumber(result.circulatingSupply),
+      details: {
+        maxSupply: result.maxSupply,
+        mintedSupply: result.mintedSupply,
+        burnedSupply: result.burnedSupply,
+        lockedSupply: result.lockedSupply,
+        unmintedSupply: result.unmintedSupply,
+        decimals: result.decimals
+      },
+      formatted: {
+        maxSupply: formatNumber(result.maxSupply),
+        mintedSupply: formatNumber(result.mintedSupply),
+        burnedSupply: formatNumber(result.burnedSupply),
+        lockedSupply: formatNumber(result.lockedSupply),
+        unmintedSupply: formatNumber(result.unmintedSupply)
+      }
+    });
     
   } catch (error) {
-    console.error('Failed to get circulating supply:', error);
-    return null;
+    console.error('Serverless function error:', error);
+    
+    // Return appropriate error response
+    if (error.message.includes('HTTP error')) {
+      return res.status(502).json({ 
+        success: false, 
+        error: 'Failed to fetch token data from external API',
+        details: error.message 
+      });
+    }
+    
+    return res.status(500).json({ 
+      success: false, 
+      error: 'Internal server error',
+      details: process.env.NODE_ENV === 'development' ? error.message : 'An error occurred'
+    });
   }
-}
-
-// For browser usage - attach to window object
-if (typeof window !== 'undefined') {
-  window.getCirculatingSupply = getCirculatingSupply;
-  window.fetchCirculatingSupply = fetchCirculatingSupply;
-}
-
-// For Node.js usage
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    getCirculatingSupply,
-    fetchCirculatingSupply,
-    formatNumber
-  };
-}
-
-// Auto-execute if called directly
-if (typeof window !== 'undefined') {
-  // Browser environment - you can call getCirculatingSupply() manually
-  console.log('Circulating supply functions loaded. Call getCirculatingSupply() to fetch data.');
-} else {
-  // Node.js environment - auto-execute
-  getCirculatingSupply();
 }
