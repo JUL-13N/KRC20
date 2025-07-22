@@ -1,7 +1,8 @@
 // File: api/unlocked-circulating.js
 // Purpose: Return the unlocked circulating supply for a given Kaspa KRC20 token, adjusted by its decimal precision.
-// Usage: /api/circulating?token={ticker} (returns circulating supply for any given token)
+// Usage: /api/unlocked-circulating?token={ticker} (returns unlocked circulating supply for any given token)
 // Default token is NACHO if no token parameter is provided
+// Formula: Unlocked Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply
 
 // Function to format numbers with commas
 function formatNumber(num) {
@@ -28,27 +29,27 @@ async function fetchTokenData(token = 'NACHO') {
   }
 }
 
-// Calculate circulating supply
-function calculateCirculatingSupply(data) {
+// Calculate unlocked circulating supply using the documented formula
+function calculateUnlockedCirculatingSupply(data) {
   try {
     // Extract values from the API response
     const maxSupply = BigInt(data.max);
     const mintedSupply = BigInt(data.minted);
     const burnedSupply = BigInt(data.burned);
-    const lockedSupply = BigInt(data.pre);
+    const lockedSupply = BigInt(data.pre); // pre-minted/locked supply
     const decimals = parseInt(data.dec);
     
     // Calculate components
     const unmintedSupply = maxSupply - mintedSupply;
     
-    // Formula: Circulating Supply = Minted Supply - Burnt Supply - Locked Supply
-    const circulatingSupplyRaw = mintedSupply - burnedSupply - lockedSupply;
+    // Formula: Unlocked Circulating Supply = Max Supply - Unminted Supply - Burnt Supply - Locked Supply
+    const unlockedCirculatingSupplyRaw = maxSupply - unmintedSupply - burnedSupply - lockedSupply;
     
-    // Adjust for decimal (dec) precision by dividing by 10^decimal
+    // Convert to decimal by dividing by 10^decimals
     const divisor = BigInt(10 ** decimals);
     
     return {
-      circulatingSupply: Number(circulatingSupplyRaw) / Number(divisor),
+      unlockedCirculatingSupply: Number(unlockedCirculatingSupplyRaw) / Number(divisor),
       maxSupply: Number(maxSupply) / Number(divisor),
       mintedSupply: Number(mintedSupply) / Number(divisor),
       burnedSupply: Number(burnedSupply) / Number(divisor),
@@ -58,7 +59,7 @@ function calculateCirculatingSupply(data) {
       rawData: data
     };
   } catch (error) {
-    console.error('Error calculating circulating supply:', error);
+    console.error('Error calculating unlocked circulating supply:', error);
     throw error;
   }
 }
@@ -93,12 +94,12 @@ export default async function handler(req, res) {
     // Fetch token data
     const tokenData = await fetchTokenData(token.toUpperCase());
     
-    // Calculate circulating supply
-    const result = calculateCirculatingSupply(tokenData);
+    // Calculate unlocked circulating supply
+    const result = calculateUnlockedCirculatingSupply(tokenData);
     
-    // Return just the circulating supply as plain text
+    // Return just the unlocked circulating supply as plain text
     res.setHeader('Content-Type', 'text/plain');
-    res.status(200).send(result.circulatingSupply.toString());
+    res.status(200).send(result.unlockedCirculatingSupply.toString());
     
   } catch (error) {
     console.error('Serverless function error:', error);
