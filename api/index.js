@@ -174,7 +174,7 @@ export default async function handler(req, res) {
         <div class="note">
             <strong>📌 Note:</strong> If no token parameter is provided, defaults to NACHO token. The two circulating supply calculations use different approaches:
             <ul>
-                <li><strong>Circulating Supply:</strong> Excludes burnt and insider tokens from max supply</li>
+                <li><strong>Circulating Supply:</strong> Excludes burnt and insider/pre-minted tokens from max supply</li>
                 <li><strong>Unlocked Circulating Supply:</strong> Accounts for all unminted, burned, and locked tokens</li>
             </ul>
         </div> 
