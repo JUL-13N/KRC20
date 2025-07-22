@@ -25,7 +25,7 @@ A simple, serverless API proxy for fetching KRC20 token information from the Kas
 ```
 GET /api?token={ticker}
 ```
-Returns comprehensive token metadata as JSON with enhanced supply metrics and normalized decimal values.
+Returns comprehensive token metadata as JSON with enhanced supply metrics and normalized decimal values using the unlocked circulating supply formula.
 
 **Example:**
 ```bash
@@ -165,7 +165,7 @@ All values are normalized by dividing by 10^("dec") for proper decimal precision
 
 ### File Descriptions
 
-- **`api/index.js`** - Main handler that serves the interactive landing page (when no token specified) and complete enhanced token data with supply metrics (when token specified)
+- **`api/index.js`** - Main handler that serves the interactive landing page (when no token specified) and complete enhanced token data with supply metrics (when token specified). Uses the unlocked circulating supply formula for enhanced calculations.
 - **`api/total.js`** - Dedicated endpoint for fetching total minted supply with decimal normalization
 - **`api/circulating.js`** - Calculates and returns basic circulating supply (max - pre-minted - burned)
 - **`api/unlocked-circulating.js`** - Calculates and returns comprehensive unlocked circulating supply
@@ -174,7 +174,7 @@ All values are normalized by dividing by 10^("dec") for proper decimal precision
 
 1. **Proxy Layer**: Acts as a simplified proxy to the [Kasplex API](https://api.kasplex.org/v1/krc20/token/nacho)
 2. **Enhanced Calculations**: Provides multiple supply calculation methods with different approaches
-3. **Decimal Normalization**: Automatically adjusts values based on each token's decimal precision
+3. **Decimal Normalization**: Automatically adjusts values based on each token's decimal precision using BigInt for precision
 4. **Multiple Formats**: Provides both JSON (complete data with metrics) and plain text (supply only) responses
 5. **Interactive Documentation**: Self-documenting API with built-in examples and formula explanations
 6. **Error Handling**: Graceful fallbacks with appropriate HTTP status codes
@@ -187,6 +187,7 @@ All values are normalized by dividing by 10^("dec") for proper decimal precision
 const response = await fetch('https://your-api.vercel.app/api?token=nacho');
 const tokenData = await response.json();
 console.log(tokenData.supplyMetrics); // Access enhanced supply calculations
+console.log(tokenData.calculatedCirculatingSupply); // Unlocked circulating supply
 
 // Get just the total supply
 const totalSupply = await fetch('https://your-api.vercel.app/api/total?token=nacho');
@@ -209,6 +210,7 @@ import requests
 response = requests.get('https://your-api.vercel.app/api?token=nacho')
 token_data = response.json()
 supply_metrics = token_data.get('supplyMetrics', {})
+circulating_supply = token_data.get('calculatedCirculatingSupply')
 
 # Total supply only
 total_supply = requests.get('https://your-api.vercel.app/api/total?token=nacho').text
@@ -240,11 +242,9 @@ curl "https://your-api.vercel.app/api"
 
 ## 🎯 Supported Tokens
 
-This API works with any KRC20 token available on the Kaspa network. Popular tokens include:
+This API works with any KRC20 token available on the Kaspa network. Token example:
 
 - `nacho` - Nacho the Kat (NACHO)
-- `kango` - Kango token
-- `kaspy` - Kaspy token
 - And many others available on the Kaspa network
 
 ## 🚀 Deployment
@@ -265,6 +265,8 @@ No environment variables required - the API is designed to work out of the box.
 All endpoints include these helpful headers:
 
 - `Access-Control-Allow-Origin: *` - CORS enabled
+- `Access-Control-Allow-Methods: GET` - Only GET requests allowed
+- `Access-Control-Allow-Headers: Content-Type` - Content-Type header allowed
 - `X-Source-Code: https://github.com/JUL-13N/KRC20` - Source code reference
 - `X-API-Version: 1.1.0` - Current API version
 
@@ -284,15 +286,33 @@ Example error response:
 
 ## 📊 Enhanced Data Fields
 
-The main API endpoint (`/api?token=X`) now includes additional calculated fields:
+The main API endpoint (`/api?token=X`) now includes additional calculated fields using BigInt precision:
 
-- `calculatedCirculatingSupply` - Unlocked circulating supply using the comprehensive formula
+- `calculatedCirculatingSupply` - Unlocked circulating supply using the comprehensive formula (Minted - Burned - Locked)
 - `calculatedTotalSupply` - Minted supply normalized by decimals
 - `calculatedMaxSupply` - Maximum supply normalized by decimals
-- `calculatedUnmintedSupply` - Remaining unminted tokens
+- `calculatedUnmintedSupply` - Remaining unminted tokens (Max - Minted)
 - `calculatedBurnedSupply` - Burned tokens normalized by decimals
 - `calculatedLockedSupply` - Locked/pre-minted tokens normalized by decimals
 - `supplyMetrics` - Object containing all supply calculations with formulas and explanations
+
+### Supply Metrics Object Structure
+```json
+{
+  "supplyMetrics": {
+    "maxSupply": 287000000000,
+    "totalSupply": 287000000000,
+    "circulatingSupply": 287000000000,
+    "unmintedSupply": 0,
+    "burnedSupply": 0,
+    "lockedSupply": 0,
+    "decimals": 8,
+    "formula": "Unlocked Circulating = Max - Unminted - Burned - Locked",
+    "simplifiedFormula": "Unlocked Circulating = Minted - Burned - Locked",
+    "note": "This calculation uses the unlocked-circulating.js formula"
+  }
+}
+```
 
 ## 🔗 Data Source
 
