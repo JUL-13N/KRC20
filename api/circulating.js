@@ -2,6 +2,7 @@
 // Purpose: Return the circulating supply for a given Kaspa KRC20 token, adjusted by its decimal precision.
 // Usage: /api/circulating?token={ticker} (returns circulating supply for any given token)
 // Default token is NACHO if no token parameter is provided
+// Formula: Circulating Supply = (Max Supply - Insider Supply - Burnt Supply)
 
 // Function to format numbers with commas
 function formatNumber(num) {
@@ -28,21 +29,21 @@ async function fetchTokenData(token = 'NACHO') {
   }
 }
 
-// Calculate circulating supply
+// Calculate circulating supply using the documented formula
 function calculateCirculatingSupply(data) {
   try {
     // Extract values from the API response
     const maxSupply = BigInt(data.max);
     const mintedSupply = BigInt(data.minted);
     const burnedSupply = BigInt(data.burned);
-    const lockedSupply = BigInt(data.pre);
+    const insiderSupply = BigInt(data.pre); // pre-minted insider supply
     const decimals = parseInt(data.dec);
     
     // Calculate components
     const unmintedSupply = maxSupply - mintedSupply;
     
-    // Formula: Circulating Supply = Minted Supply - Burnt Supply - Locked Supply
-    const circulatingSupplyRaw = mintedSupply - burnedSupply - lockedSupply;
+    // Formula: Circulating Supply = Max Supply - Insider Supply - Burnt Supply
+    const circulatingSupplyRaw = maxSupply - insiderSupply - burnedSupply;
     
     // Convert to decimal by dividing by 10^decimals
     const divisor = BigInt(10 ** decimals);
@@ -52,7 +53,7 @@ function calculateCirculatingSupply(data) {
       maxSupply: Number(maxSupply) / Number(divisor),
       mintedSupply: Number(mintedSupply) / Number(divisor),
       burnedSupply: Number(burnedSupply) / Number(divisor),
-      lockedSupply: Number(lockedSupply) / Number(divisor),
+      insiderSupply: Number(insiderSupply) / Number(divisor),
       unmintedSupply: Number(unmintedSupply) / Number(divisor),
       decimals: decimals,
       rawData: data
