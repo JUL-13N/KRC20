@@ -1,6 +1,6 @@
 // File: api/total.js
 // Purpose: Serve complete token data and the total supply from Kasplex API, normalized by decimal precision.
-// Usage: /api/max?token={ticker} (returns just total supply for any given token)
+// Usage: /api/total?token={ticker} (returns just total supply for any given token)
 // Usage: /api?token={ticker} (returns all token info for {ticker})
 // Default token is NACHO if no token parameter is provided
 
@@ -44,6 +44,9 @@ export default async function handler(req, res) {
       }
       // 📐 Normalize total supply by decimal divisor
       const adjustedTotalSupply = totalSupply / divisor;
+      
+      // 📤 Send result as plain text response
+      res.setHeader('Content-Type', 'text/plain');
       return res.status(200).send(adjustedTotalSupply.toString());
     } else {
       // 🧮 Normalize key values for /api endpoint
