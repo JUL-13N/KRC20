@@ -96,59 +96,9 @@ export default async function handler(req, res) {
     // Calculate circulating supply
     const result = calculateCirculatingSupply(tokenData);
     
-    // Return styled HTML page instead of plain text
-    res.setHeader('Content-Type', 'text/html');
-    const htmlResponse = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${token.toUpperCase()} Circulating Supply</title>
-    <style>
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-        }
-        .supply-value {
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 20px 0;
-            letter-spacing: 2px;
-        }
-        .token-label {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            opacity: 0.8;
-        }
-        .api-info {
-            font-size: 0.9rem;
-            opacity: 0.6;
-            margin-top: 40px;
-            max-width: 600px;
-        }
-    </style>
-</head>
-<body>
-    <div class="token-label">${token.toUpperCase()} Circulating Supply</div>
-    <div class="supply-value">${result.circulatingSupply.toLocaleString()}</div>
-    <div class="api-info">
-        API Endpoint: /api/circulating?token=${token.toUpperCase()}<br>
-        Raw Value: ${result.circulatingSupply}<br>
-        Decimals: ${result.decimals}
-    </div>
-</body>
-</html>`;
-    res.status(200).send(htmlResponse);
+    // Return just the circulating supply as plain text
+    res.setHeader('Content-Type', 'text/plain');
+    res.status(200).send(result.circulatingSupply.toString());
     
   } catch (error) {
     console.error('Serverless function error:', error);
