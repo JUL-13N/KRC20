@@ -96,28 +96,9 @@ export default async function handler(req, res) {
     // Calculate circulating supply
     const result = calculateCirculatingSupply(tokenData);
     
-    // Return the result
-    res.status(200).json({
-      success: true,
-      token: token.toUpperCase(),
-      circulatingSupply: result.circulatingSupply,
-      formattedCirculatingSupply: formatNumber(result.circulatingSupply),
-      details: {
-        maxSupply: result.maxSupply,
-        mintedSupply: result.mintedSupply,
-        burnedSupply: result.burnedSupply,
-        lockedSupply: result.lockedSupply,
-        unmintedSupply: result.unmintedSupply,
-        decimals: result.decimals
-      },
-      formatted: {
-        maxSupply: formatNumber(result.maxSupply),
-        mintedSupply: formatNumber(result.mintedSupply),
-        burnedSupply: formatNumber(result.burnedSupply),
-        lockedSupply: formatNumber(result.lockedSupply),
-        unmintedSupply: formatNumber(result.unmintedSupply)
-      }
-    });
+    // Return just the circulating supply as plain text
+    res.setHeader('Content-Type', 'text/plain');
+    res.status(200).send(result.circulatingSupply.toString());
     
   } catch (error) {
     console.error('Serverless function error:', error);
