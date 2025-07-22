@@ -44,7 +44,7 @@ function calculateCirculatingSupply(data) {
     // Formula: Circulating Supply = Minted Supply - Burnt Supply - Locked Supply
     const circulatingSupplyRaw = mintedSupply - burnedSupply - lockedSupply;
     
-    // Convert to decimal by dividing by 10^decimals
+    // Adjust for decimal precision (dec) by dividing by 10^dec
     const divisor = BigInt(10 ** decimals);
     
     return {
