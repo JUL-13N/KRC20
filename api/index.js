@@ -166,7 +166,7 @@ export default async function handler(req, res) {
             • Max Supply = "max" field<br>
             • Unminted Supply = "max" - "minted"<br>
             • Burnt Supply = "burned" field<br>
-            • Locked Supply = "pre"-minted field<br><br>
+            • Locked Supply = "pre" field<br><br>
             All values are divided by 10^("dec") for decimal precision.
         </div>
         <p>The unlocked formula simplifies to: <code>Minted Supply - Burnt Supply - Locked Supply</code></p>
