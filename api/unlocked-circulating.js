@@ -36,7 +36,7 @@ function calculateUnlockedCirculatingSupply(data) {
     const maxSupply = BigInt(data.max);
     const mintedSupply = BigInt(data.minted);
     const burnedSupply = BigInt(data.burned);
-    const lockedSupply = BigInt(data.pre); // pre-minted/locked supply
+    const lockedSupply = BigInt(data.pre); // pre-minted locked supply
     const decimals = parseInt(data.dec);
     
     // Calculate components
