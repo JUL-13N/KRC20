@@ -185,10 +185,10 @@ export default async function handler(req, res) {
         
         <h3>Response Format</h3>
         <ul>
-            <li><strong>/api?token=X</strong> - Returns full JSON object of live token data with calculated supply metrics.</li>
-            <li><strong>/api/total?token=X</strong> - Returns the total minted supply, normalized by decimal precision.</li>
-            <li><strong>/api/circulating?token=X</strong> - Returns the circulating supply using the basic formula (excludes insider supply).</li>
-            <li><strong>/api/unlocked-circulating?token=X</strong> - Returns the unlocked circulating supply using the comprehensive formula.</li>
+            <li><strong>/api?token=X</strong> - Returns full JSON object of live token data with calculated supply metrics</li>
+            <li><strong>/api/total?token=X</strong> - Returns the total minted supply, normalized by decimal precision</li>
+            <li><strong>/api/circulating?token=X</strong> - Returns the circulating supply using the basic formula (excludes insider supply)</li>
+            <li><strong>/api/unlocked-circulating?token=X</strong> - Returns the unlocked circulating supply using the comprehensive formula</li>
         </ul>
         
         <h3>Enhanced Data Fields</h3>
