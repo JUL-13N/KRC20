@@ -2,7 +2,7 @@
 
 A simple, serverless API proxy for fetching KRC20 token information from the Kaspa network. Built with Vercel serverless functions, this API provides easy access to token data with normalized decimal precision, enhanced supply calculations, and multiple endpoint formats.
 
-## ✨ Features
+## Features
 
 - **Real-time token data** from Kasplex API
 - **Enhanced supply calculations** with multiple formula approaches
@@ -15,11 +15,11 @@ A simple, serverless API proxy for fetching KRC20 token information from the Kas
 - **Interactive HTML documentation** landing page
 - **Serverless architecture** for scalability
 
-## 🚀 Live API
+## Live API
 
 **Base URL:** `https://your-vercel-deployment.vercel.app`
 
-## 📋 API Endpoints
+## API Endpoints
 
 ### 1. Complete Token Information
 ```
@@ -120,7 +120,7 @@ GET /api
 ```
 Displays a comprehensive HTML documentation page with live examples, formula explanations, and interactive links when no token parameter is provided.
 
-## 🧮 Supply Calculation Formulas
+## Supply Calculation Formulas
 
 The API provides two different approaches for calculating circulating supply:
 
@@ -152,7 +152,7 @@ Simplified: Minted Supply - Burnt Supply - Locked Supply
 
 All values are normalized by dividing by 10^("dec") for proper decimal precision.
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 ├── api/
@@ -179,7 +179,7 @@ All values are normalized by dividing by 10^("dec") for proper decimal precision
 5. **Interactive Documentation**: Self-documenting API with built-in examples and formula explanations
 6. **Error Handling**: Graceful fallbacks with appropriate HTTP status codes
 
-## 💡 Usage Examples
+## Usage Examples
 
 ### JavaScript/Node.js
 ```javascript
@@ -240,14 +240,14 @@ curl "https://your-api.vercel.app/api/unlocked-circulating?token=nacho"
 curl "https://your-api.vercel.app/api"
 ```
 
-## 🎯 Supported Tokens
+## Supported Tokens
 
 This API works with any KRC20 token available on the Kaspa network. Token example:
 
 - `nacho` - Nacho the Kat (NACHO)
 - And many others available on the Kaspa network
 
-## 🚀 Deployment
+## Deployment
 
 ### Deploy to Vercel
 
@@ -260,7 +260,7 @@ This API works with any KRC20 token available on the Kaspa network. Token exampl
 
 No environment variables required - the API is designed to work out of the box.
 
-## 🔍 Response Headers
+## Response Headers
 
 All endpoints include these helpful headers:
 
@@ -270,7 +270,7 @@ All endpoints include these helpful headers:
 - `X-Source-Code: https://github.com/JUL-13N/KRC20` - Source code reference
 - `X-API-Version: 1.1.0` - Current API version
 
-## ⚠️ Error Handling
+## Error Handling
 
 The API provides clear error messages with appropriate HTTP status codes:
 
@@ -314,19 +314,19 @@ The main API endpoint (`/api?token=X`) now includes additional calculated fields
 }
 ```
 
-## 🔗 Data Source
+## Data Source
 
 This API fetches data from the official [Kasplex API](https://docs-kasplex.gitbook.io/krc20/tools-and-reference/kasplex-indexer-api/krc-20/get-token-info), which provides comprehensive KRC20 token indexing for the Kaspa network.
 
-## 📝 License
+## License
 
 MIT License - feel free to use this API for your projects.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📞 Support
+## Support
 
 If you encounter any issues or have questions:
 
