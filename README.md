@@ -284,7 +284,7 @@ Example error response:
 }
 ```
 
-## 📊 Enhanced Data Fields
+## Enhanced Data Fields
 
 The main API endpoint (`/api?token=X`) now includes additional calculated fields using BigInt precision:
 
